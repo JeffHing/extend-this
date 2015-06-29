@@ -1,0 +1,29 @@
+{
+    "name": "extendThis",
+    "version": "0.1.0",
+    "dependencies": {
+        "fast-apply": "0.0.3"
+    },
+    "devDependencies": {
+        "eslint": "^0.23.0",
+        "eslint-loader": "^0.14.0",
+        "extend": "^2.0.1",
+        "karma": "^0.12.31",
+        "karma-cli": "0.0.4",
+        "karma-coverage": "^0.4.2",
+        "karma-jasmine": "^0.3.5",
+        "karma-phantomjs-launcher": "^0.1.4",
+        "karma-webpack": "^1.5.1",
+        "path": "^0.11.14",
+        "phantomjs-polyfill": "0.0.1",
+        "rimraf": "^2.4.0",
+        "webpack": "^1.9.4"
+    },
+    "scripts": {
+        "predist": "rimraf dist && mkdir dist",
+        "dist": "npm run distBuild && npm run distTest",
+        "distBuild": "webpack --progress && webpack -p --progress --config webpack.min.config.js",
+        "distTest": "karma start --single-run && karma start karma.min.conf.js --single-run",
+        "dev": "karma start"
+    }
+}
