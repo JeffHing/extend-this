@@ -40,6 +40,16 @@ it to support arbitrary "recipes" for extending objects.
 
 ## Installation
 
+To install the package:
+
+    npm install extend-this
+    
+To require the package:    
+
+```javascript
+var extend = require("extend-this");
+```    
+
 ## Usage
 
 ### Delegation
@@ -97,9 +107,9 @@ console.log(myShape._width);
 ```
 
 **Note:**
-If you want to use the `extend.withCall()` method in combination with the selectors    
-and filters described below, pass the constructor and its arguments in an array
-followed by the filter or selector arguments.
+If you want to use the `extend.withCall()` method in combination with the
+selectors and filters described below, pass the constructor and its arguments
+in an array followed by the filter or selector arguments.
 
     extend(this).withCall([Rectangle, 5, 4], '!type');
     
@@ -196,8 +206,8 @@ call adds a selector which is invoked whenever a string is prefixed with '*'.
 extend.selector('*', mySelector);
 ```
     
-The selector is passed a selectorContext object which contains the
-sourceKeys object. The sourceKeys object should be updated with the keys of 
+The selector is passed a `selectorContext` object which contains the
+`sourceKeys` object. The sourceKeys object should be updated with the keys of 
 the properties to merge into the target object.
 
 ```javascript    
@@ -242,9 +252,9 @@ is passed from one filter to the next.
 extend(this).with(new Dog(), myFilter, anotherFilter);
 ```
 
-Each filter is passed a context object which contains the property being merged 
-plus additional contextual information. The filter can modify the source property
-value and the target key. It is expected to return true 
+Each filter is passed a `filterContext` object which contains the property 
+being merged  plus additional contextual information. The filter can modify
+the source property value and the target key. It is expected to return true 
 if the property can be merged, and false if the property should be rejected.
 
 Here is the filter used by the `extend.withDelegate()` method to delegate method
@@ -255,15 +265,15 @@ calls to the source object:
  * A filter which transforms the source functions to functions which can
  * be called from the context of the target object.
  *
- * @param context.target {object}
+ * @param filterContext.target {object}
  *    The target object (readonly).
- * @param context.source {object}
+ * @param filterContext.source {object}
  *    The source object (readonly).
- * @param context.sourceKey {string}
+ * @param filterContext.sourceKey {string}
  *    The source property key (readonly).
- * @param context.sourceValue {*} 
+ * @param filterContext.sourceValue {*} 
  *    The source property value (modifiable).
- * @param context.targetKey {string}
+ * @param filterContext.targetKey {string}
  *    The target key (modifiable).
  *
  * @returns {boolean} true to allow property to be merged
@@ -298,8 +308,7 @@ function createExcludeNameFilter(regexp) {
 }
 ```
 
-The following invocation is equivalent to calling the `extend.withDelegate()`
-method:
+The following call is equivalent to calling `extend.withDelegate(new Dog());`.
 
 ```javascript    
 extend(this).with(new Dog(), createExcludeFilter(/^_/), delegateFilter);
@@ -320,10 +329,18 @@ To add a new method, use the `extend.method()`. This example shoes how the
 extend.method('withDelegate', delegateMethod);
 ```
     
-The `delegateMethod()` will be passed a parser function and the method arguments.
-The method can manipulate the arguments as needed, and then pass the arguments to the
-parser function. The output of the parser function can be manipulated by the
-method before it is returned by the method.
+The `delegateMethod()` will be passed a parser function and the method
+arguments. A method can manipulate the arguments as needed, and then pass
+the arguments to the parser function. The output of the parser function can
+than be manipulated by the method before it is returned.
+
+The `delegateMethod()` adds the `excludeNameFilter` at the front of the filter
+pipeline, and adds the `delegateFilter` at the end of the filter pipeline. 
+
+**Note:** This is an advantage of adding filters using a method as opposed
+to passing them in as method arguments. The filters can be added before and
+after the user provided arguments.
+
 
 ```javascript    
 /*
@@ -353,9 +370,6 @@ function delegateMethod(target, parseArgs, args) {
     return params;
 }
 ```
-
-It adds the `excludeNameFilter` at the front of the filter pipeline, and adds
-the `delegateFilter` at the end of the filter pipeline.
 
 #### Changing a Method Name
 
