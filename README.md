@@ -25,7 +25,7 @@ it to support arbitrary "recipes" for extending objects.
    - [Methods](#methods)
    - [Array Arguments](#array-arguments)
    - [Configuration](#configuration)
-   - [Other extend Function](#other-extend-function)
+   - [Multiple extend Functions](#multiple-extend-functions)
 - [Limitations](#limitations)
 
 ## Features
@@ -410,7 +410,7 @@ extend.config.throwPropertyNotFoundError = false;
 
 ```
 
-### Other extend Function
+### Multiple extend Functions
 
 There may be a different extend function which you may want to use in addition
 to extendThis. To allow the other extend function to be invoked from extendThis,
