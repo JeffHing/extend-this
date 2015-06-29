@@ -25,7 +25,7 @@ it to support arbitrary "recipes" for extending objects.
    - [Methods](#methods)
    - [Array Arguments](#array-arguments)
    - [Configuration](#configuration)
-   - [Additional extend Function](#additional-extend-function)
+   - [Other extend Function](#other-extend-function)
 - [Limitations](#limitations)
 
 ## Features
@@ -410,9 +410,9 @@ extend.config.throwPropertyNotFoundError = false;
 
 ```
 
-### Additional extend Function
+### Other extend Function
 
-There may be another extend function which you may want to use in addition
+There may be a different extend function which you may want to use in addition
 to extendThis. To allow the other extend function to be invoked from extendThis,
 use the `extend.wrap()` method:
 
