@@ -329,17 +329,18 @@ To add a new method, use the `extend.method()`. This example shoes how the
 extend.method('withDelegate', delegateMethod);
 ```
     
-The `delegateMethod()` will be passed a parser function and the method
-arguments. A method can manipulate the arguments as needed, and then pass
-the arguments to the parser function. The output of the parser function can
-than be manipulated by the method before it is returned.
+Every method is passed a parser function and the user provided arguments. 
+A method can manipulate the arguments as needed, and then pass
+the arguments to the parser function. The output of the parser function
+can than be manipulated by the method before it is returned.
 
-The `delegateMethod()` adds the `excludeNameFilter` at the front of the filter
-pipeline, and adds the `delegateFilter` at the end of the filter pipeline. 
+In this case, `delegateMethod()` simply adds the `excludeNameFilter` at the 
+front of the filter pipeline, and the `delegateFilter` at the end of the filter 
+pipeline. 
 
 **Note:** This is an advantage of adding filters using a method as opposed
-to passing them in as method arguments. The filters can be added before and
-after the user provided arguments.
+to passing them in as method arguments. The filters are assured to be added 
+before and after the user provided arguments.
 
 
 ```javascript    
@@ -373,7 +374,7 @@ function delegateMethod(target, parseArgs, args) {
 
 #### Changing a Method Name
 
-To change an existing method name, use the `extend.method()` call.
+To change a method name, use the `extend.method()` call.
 The following calls change the 'with' method name to 'withMixin'.
 
 ```javascript    
