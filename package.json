@@ -33,10 +33,11 @@
         "webpack": "^1.9.4"
     },
     "scripts": {
+        "dev": "karma start",
+        "test": "karma start --single-run",
         "predist": "rimraf dist && mkdir dist",
         "dist": "npm run distBuild && npm run distTest",
         "distBuild": "webpack --progress && webpack -p --progress --config webpack.min.config.js",
-        "distTest": "karma start --single-run && karma start karma.min.conf.js --single-run",
-        "dev": "karma start"
+        "distTest": "npm run test && karma start karma.min.conf.js --single-run"
     }
 }
