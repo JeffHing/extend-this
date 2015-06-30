@@ -335,9 +335,9 @@ In this case, `delegateMethod()` simply adds the `excludeNameFilter` at the
 front of the filter pipeline, and the `delegateFilter` at the end of the filter 
 pipeline. 
 
-**Note:** The advantage of adding filters using a method, as opposed
-to passing them in as method arguments, is that the filters are assured to be 
-added before and after the user provided arguments.
+**Note:** One of the advantages of adding filters using a method, as opposed
+to passing them in as method arguments, is that you have control over where
+the filters are placed in relation to any user provided arguments.
 
 
 ```javascript    
