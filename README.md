@@ -1,8 +1,4 @@
-<!--
-  Copyright 2015. Author: Jeffrey Hing. All Rights Reserved.
-  
-  MIT License
--->  
+<!-- Copyright 2015. Author: Jeffrey Hing. All Rights Reserved. MIT License -->  
 
 # ExtendThis
 
@@ -77,6 +73,7 @@ are copied (shallow).
 
     
 ### Mixins
+
 To mixin the APIs from another object, use the `extend.withCall()` and 
 `extend.with()` methods:
 
@@ -207,7 +204,7 @@ extend.selector('*', mySelector);
 ```
     
 The selector is passed a `selectorContext` object which contains the
-`sourceKeys` object. The sourceKeys object should be updated with the keys of 
+`sourceKeys` object. The `sourceKeys` object should be updated with the keys of 
 the properties to merge into the target object.
 
 ```javascript    
@@ -244,9 +241,9 @@ function mySelector(selectorContext) {
     
 ### Filters    
 
-Filters can be used to not only select properties, but also
-transform properties. Filters form a filter pipeline where a property
-is passed from one filter to the next.
+Filters can be used to reject properties and transform properties.
+Filters form a filter pipeline where a property is passed from one filter to 
+the next.
 
 ```javascript    
 extend(this).with(new Dog(), myFilter, anotherFilter);
@@ -266,11 +263,11 @@ calls to the source object:
  * be called from the context of the target object.
  *
  * @param filterContext.target {object}
- *    The target object (readonly).
+ *    The target object (read-only).
  * @param filterContext.source {object}
- *    The source object (readonly).
+ *    The source object (read-only).
  * @param filterContext.sourceKey {string}
- *    The source property key (readonly).
+ *    The source property key (read-only).
  * @param filterContext.sourceValue {*} 
  *    The source property value (modifiable).
  * @param filterContext.targetKey {string}
@@ -338,9 +335,9 @@ In this case, `delegateMethod()` simply adds the `excludeNameFilter` at the
 front of the filter pipeline, and the `delegateFilter` at the end of the filter 
 pipeline. 
 
-**Note:** This is an advantage of adding filters using a method as opposed
-to passing them in as method arguments. The filters are assured to be added 
-before and after the user provided arguments.
+**Note:** The advantage of adding filters using a method, as opposed
+to passing them in as method arguments, is that the filters are assured to be 
+added before and after the user provided arguments.
 
 
 ```javascript    
