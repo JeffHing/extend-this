@@ -41,6 +41,15 @@ module.exports = function(options) {
             testFilesPattern
         ],
 
+        webpack: {
+            module: {
+                loaders: []
+            },
+            resolve: {
+                alias: {}
+            }
+        },
+
         webpackMiddleware: {
             noInfo: false
         },

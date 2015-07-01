@@ -19,23 +19,19 @@ var karmaBaseConf = require('./karma.base.conf');
 //-------------------------------------
 
 module.exports = function(config) {
-    config.set(karmaBaseConf({
-        webpack: {
-            resolve: {
-                alias: {
-                    // Test using this source file
-                    'extendThis': path.join(__dirname, 'src/extendThis.js')
-                }
-            },
 
-            module: {
-                loaders: [{
-                    // Lint un-minified javascript
-                    test: /\.js$/,
-                    loader: 'eslint-loader',
-                    exclude: /node_modules/
-                }]
-            }
-        }
-    }));
+    var options = karmaBaseConf();
+
+    // Test using this source file
+    options.webpack.resolve.alias.extendThis =
+        path.join(__dirname, 'src/extendThis.js');
+
+    // Lint un-minified javascript
+    options.webpack.module.loaders.push({
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+    });
+
+    config.set(options);
 };

@@ -19,14 +19,11 @@ var karmaBaseConf = require('./karma.base.conf');
 //-------------------------------------
 
 module.exports = function(config) {
-    config.set(karmaBaseConf({
-        webpack: {
-            resolve: {
-                alias: {
-                    // Test using this source file
-                    'extendThis': path.join(__dirname, 'dist/extendThis.min.js')
-                }
-            }
-        }
-    }));
+    var options = karmaBaseConf();
+
+    // Test using this source file
+    options.webpack.resolve.alias.extendThis =
+        path.join(__dirname, 'dist/extendThis.min.js');
+
+    config.set(options);
 };
