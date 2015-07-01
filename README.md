@@ -308,7 +308,7 @@ function createExcludeNameFilter(regexp) {
 The following call is equivalent to calling `extend.withDelegate(new Dog());`.
 
 ```javascript    
-extend(this).with(new Dog(), createExcludeFilter(/^_/), delegateFilter);
+extend(this).with(new Dog(), createExcludeNameFilter(/^_/), delegateFilter);
 ```
     
 ### Methods    
@@ -337,7 +337,7 @@ pipeline.
 
 **Note:** One of the advantages of adding filters using a method, as opposed
 to passing them in as method arguments, is that you have control over where
-the filters are placed in relation to any user provided arguments.
+the filters are placed in relation to the user provided arguments.
 
 
 ```javascript    
