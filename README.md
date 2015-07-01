@@ -124,7 +124,10 @@ Merges the properties with the specified name:
     
 #### Negation Selector
 
-Merges all properties except the ones prefixed with the '!' character:
+If no properties are currently selected, it merges all properties except the 
+ones prefixed with the '!' character. Otherwise it simply unselects the 
+properties prefixed with the '!' character from the currently selected 
+properties.
 
     extend(this).withDelegate(new Dog(), '!type', '!color');
 
