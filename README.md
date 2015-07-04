@@ -5,9 +5,9 @@
 ExtendThis is an extensible framework for defining "recipes" for extending an
 object using properties from other objects. It evolved from the need to
 selectively compose an object's API using composition (rather than 
-inheritance). Out-of-the-box, it supports extending objects through delegation 
+inheritance). Out-of-the-box, it supports extending objects using delegation 
 and mixins. However, its API has been generalized to allow 
-it to support arbitrary "recipes" for extending objects.
+it to support arbitrary recipes for extending objects.
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ var extend = require("extend-this");
 ### Delegation
 
 To delegate method calls to another object, use the 
-`extend.withDelegate()` method:
+`.withDelegate()` method:
 
 ```javascript    
 /*
@@ -74,8 +74,8 @@ are copied (shallow).
     
 ### Mixins
 
-To mixin the APIs from another object, use the `extend.withCall()` and 
-`extend.with()` methods:
+To mixin the APIs from another object, use the `.withCall()` and 
+`.with()` methods:
 
 ```javascript    
 /*
@@ -104,7 +104,7 @@ console.log(myShape._width);
 ```
 
 **Note:**
-If you want to use the `extend.withCall()` method in combination with the
+If you want to use the `.withCall()` method in combination with the
 selectors and filters described below, pass the constructor and its arguments
 in an array followed by the filter or selector arguments.
 
@@ -133,7 +133,7 @@ properties.
 
 #### Regular Expression Selector
 
-Merges all properties that match the regular expression:
+Merges all properties whose names match the regular expression:
 
     extend(this).withDelegate(new Dog(), /bark/);
     
@@ -160,7 +160,7 @@ mutant.person();
 
 #### Override Selector
 
-Merges the property with the specified name, but doesn't report an
+Merges the property with the specified name, and doesn't report an
 error if the property already exists in the target object:
 
 ```javascript    
@@ -172,49 +172,39 @@ extend(this).withDelegate(new Dog(), '#bark');
 
 Different selector types can be used together.
 
-This example merges all properties but renames the `bark()` method to 
+This example merges all properties and renames the `bark()` method to 
 the `sound()` method:
 
 ```javascript    
 extend(this).withDelegate(new Dog(), /.*/, {bark: sound});
 ```
     
-This example renames the `bark()` method to the `sound()` method and disables any
-error if the `sound()` method already exists in the target object:
+This example renames the `bark()` method to the `sound()` method and doesn't
+report an error if the `sound()` method already exists in the target object:
 
 ```javascript    
 extend(this).withDelegate(new Dog(), {'#bark': sound});
 ```
-    
-#### Changing a Selector Prefix
-
-To change the prefix used by a selector, use the `extend.selector()` method. The 
-following calls change the override selector to use the '@' prefix 
-instead of the '#' prefix.
-
-```javascript    
-extend.selector('@', extend.selector('#'));
-extend.selector('#', null);
-```
-
 #### Adding a Selector
 
-To add your own selector, use the `extend.selector()` method. The following
+To add your own selector, use the `.selector()` method. The following
 call adds a selector which is invoked whenever a string is prefixed with '*'.
 
 ```javascript    
 extend.selector('*', mySelector);
 ```
     
-The selector is passed a `selectorContext` object which contains the
+Every selector is passed a `selectorContext` object which contains the
 `sourceKeys` object. The `sourceKeys` object should be updated with the keys of 
 the properties to merge into the target object.
 
+In this example, `mySelector` merges all properties but doesn't report an
+error if the property already exists in the target object:
+
 ```javascript    
 /*
- * A selector which merges all properties from the source object
- * and does not report an error if the property already exists in the 
- * target object.
+ * A selector which merges all properties but doesn't report an error if the
+ * property already exists in the target object:
  *
  * @param selectorContext.source {object}
  *     The source object (read-only).
@@ -241,23 +231,38 @@ function mySelector(selectorContext) {
     }
 };
 ```
+
+#### Changing a Selector Prefix
+
+To change how an existing selector is invoked, use the `.selector()` method.
+The following calls change the override selector to use the '@' prefix 
+instead of the '#' prefix.
+
+```javascript    
+extend.selector('@', extend.selector('#'));
+extend.selector('#', null);
+```
     
 ### Filters    
 
-Filters can be used to reject properties and transform properties.
-Filters form a filter pipeline where a property is passed from one filter to 
-the next.
+Filters allow you to reject selected properties, and transform the values of
+selected properties. Filters form a filter pipeline where a property is passed 
+from one filter to the next.
+
+#### Adding a Filter
+
+To add a filter, simply add it as another argument to the method call:
 
 ```javascript    
-extend(this).with(new Dog(), myFilter, anotherFilter);
+extend(this).with(new Dog(), '!bark', myFilter, anotherFilter);
 ```
 
 Each filter is passed a `filterContext` object which contains the property 
-being merged  plus additional contextual information. The filter can modify
-the source property value and the target key. It is expected to return true 
-if the property can be merged, and false if the property should be rejected.
+being merged. The filter can modify the property's value and the target key. A
+filter is expected to return true if the property can be merged, and false if
+the property should be rejected.
 
-Here is the filter used by the `extend.withDelegate()` method to delegate method
+Here is the filter used by the `.withDelegate()` method to delegate method
 calls to the source object:
 
 ```javascript    
@@ -290,7 +295,7 @@ function delegateFilter(filterContext) {
 }
 ```
 
-Here is the filter used by the `extend.withDelegate()` method to exclude all
+Here is the filter used by the `.withDelegate()` method to exclude all
 properties beginning with the underscore character.
 
 ```javascript    
@@ -317,31 +322,29 @@ extend(this).with(new Dog(), createExcludeNameFilter(/^_/), delegateFilter);
 ### Methods    
 
 Methods allow you to fully operate on the target and source object. However
-their main purpose is to allow you to preselect which filters are applied to the 
-properties rather than having to pass-in each individual filter as a parameter.
+their main purpose is to allow you to preselect which filters are applied to the
+properties rather than having the user pass in the filters as arguments.
 
 #### Adding a Method
 
-To add a new method, use the `extend.method()`. This example shoes how the 
-`extend.withDelegate()` method is added to extendThis:
+To add a new method, use `.method()`:
 
 ```javascript    
 extend.method('withDelegate', delegateMethod);
 ```
-    
-Every method is passed a parser function and the user provided arguments. 
-A method can manipulate the arguments as needed, and then pass
-the arguments to the parser function. The output of the parser function
-can than be manipulated by the method before it is returned.
 
-In this case, `delegateMethod()` simply adds the `excludeNameFilter` at the 
-front of the filter pipeline, and the `delegateFilter` at the end of the filter 
-pipeline. 
+Every method is passed a `parser` function and the user arguments.
+The method is responsible for calling the `parser` function with the user 
+arguments and returning the parameters from the parser function. But before 
+doing so, a method can:
 
-**Note:** One of the advantages of adding filters using a method, as opposed
-to passing them in as method arguments, is that you have control over where
-the filters are placed in relation to the user provided arguments.
+* modify the user arguments before passing them to the parser function
+* modify the parameters returned by the parser function
 
+In this example, the `delegateMethod` 
+modifies the parameters returned by the parser function by adding the
+`excludeNameFilter` at the front of the  filter pipeline, and the 
+`delegateFilter` at the end of the filter pipeline. 
 
 ```javascript    
 /*
@@ -372,10 +375,14 @@ function delegateMethod(target, parseArgs, args) {
 }
 ```
 
+**Note:** One of the advantages of adding filters using a method is 
+that you have absolute control over where the filters are placed in relation 
+to the user provided arguments.
+
 #### Changing a Method Name
 
-To change a method name, use the `extend.method()` call.
-The following calls change the 'with' method name to 'withMixin'.
+To change how an existing method is invoked, use the `.method()` call. The
+following calls change the mixin method from `.with()` to `withMixin()`:
 
 ```javascript    
 extend.method('withMixin', extend.method('with'));
@@ -414,7 +421,7 @@ extend.config.throwPropertyNotFoundError = false;
 
 There may be a different extend function which you may want to use in addition
 to extendThis. To allow the other extend function to be invoked from extendThis,
-use the `extend.wrap()` method:
+use the `.wrap()` method:
 
 ```javascript    
 extend.wrap(otherExtendFunc);
