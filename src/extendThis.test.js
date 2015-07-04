@@ -548,4 +548,24 @@ describe('extendThis.js:', function() {
             }).toThrow(error);
         });
     });
+
+    describe('Stringifying object with cyclical dependency', function() {
+        function Dog() {
+            // Create object with cyclical dependency.
+            var source = {
+                value: true
+            };
+            source.self = source;
+
+            extend(this).with(source, '!foobar');
+        }
+
+        it('should succeed', function() {
+            var error = new Error('extendThis.js: Property not found: foobar in ' +
+                '{"value":true}');
+            expect(function() {
+                new Dog(); // eslint-disable-line no-new
+            }).toThrow(error);
+        });
+    });
 });

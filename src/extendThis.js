@@ -614,7 +614,7 @@ function isFunction(value) {
     return typeof value === 'function';
 }
 
-/**
+/*
  * Copies the keys in the source object to the sourceKey object.
  */
 function extendSourceKeys(sourceKeys, source, regexp) {
@@ -623,6 +623,22 @@ function extendSourceKeys(sourceKeys, source, regexp) {
             sourceKeys[key] = key;
         }
     }
+}
+
+/*
+ * Removes cyclical dependencies.
+ */
+function stringify(object) {
+    var seen = [];
+    return JSON.stringify(object, function(key, val) {
+        if (val !== null && typeof val === 'object') {
+            if (seen.indexOf(val) >= 0) {
+                return undefined;
+            }
+            seen.push(val);
+        }
+        return val;
+    });
 }
 
 //--------------------------------------
@@ -638,20 +654,20 @@ function createErrorsManager() {
     };
 
     function illegalArgument(arg, message) {
-        var full = JSON.stringify(arg) + ': ' + message;
+        var full = stringify(arg) + ': ' + message;
         throw new Error(formatMessage('Illegal argument', full));
     }
 
     function propertyNotFound(key, object) {
         if (config.throwPropertyNotFoundError) {
-            var message = key + ' in ' + JSON.stringify(object);
+            var message = key + ' in ' + stringify(object);
             throw new Error(formatMessage('Property not found', message));
         }
     }
 
     function propertyOverride(key, object) {
         if (config.throwOverrideError) {
-            var message = key + ' in ' + JSON.stringify(object);
+            var message = key + ' in ' + stringify(object);
             throw new Error(formatMessage('Property already exists',
                 message));
         }
@@ -659,7 +675,7 @@ function createErrorsManager() {
 
     function formatMessage(name, message) {
         if (!isString(message)) {
-            message = JSON.stringify(message);
+            message = stringify(message);
         }
         return config.filename + ': ' + name + ': ' + message;
     }
