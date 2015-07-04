@@ -199,7 +199,7 @@ selector should update the embedded `sourceKeys` object with the names of the
 properties to merge into the target object.
 
 In this example, `mySelector` merges all the properties from the source
-object and disables any error if the property already exists in the 
+object and does not report an error if the property already exists in the 
 target object:
 
 ```javascript    
@@ -328,7 +328,8 @@ properties rather than having the user pass in the filters as arguments.
 
 #### Adding a Custom Method
 
-To add your own method, use `.method()`:
+To add your own method, use `.method()`. In the following example, 
+`delegateMethod` is invoked when the user calls `.withDelegate()`:
 
 ```javascript    
 extend.method('withDelegate', delegateMethod);
