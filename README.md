@@ -185,21 +185,22 @@ report an error if the `sound()` method already exists in the target object:
 ```javascript    
 extend(this).withDelegate(new Dog(), {'#bark': sound});
 ```
-#### Adding a Selector
+#### Adding a Custom Selector
 
-To add your own selector, use the `.selector()` method. The following
-call adds a selector which is invoked whenever a string is prefixed with '*'.
+To add your own selector, use the `.selector()` method. In the following
+example, `mySelector` will be invoked whenever a string argument is 
+prefixed with '*':
 
 ```javascript    
 extend.selector('*', mySelector);
 ```
-    
-Every selector is passed a `selectorContext` object which contains the
-`sourceKeys` object. The `sourceKeys` object should be updated with the keys of 
-the properties to merge into the target object.
+When a selector is invoked, it is passed a `selectorContext` object. The
+selector should update the embedded `sourceKeys` object with the names of the
+properties to merge into the target object.
 
-In this example, `mySelector` merges all properties but doesn't report an
-error if the property already exists in the target object:
+In this example, `mySelector` merges all the properties from the source
+object and disables any error if the property already exists in the 
+target object:
 
 ```javascript    
 /*
@@ -234,9 +235,9 @@ function mySelector(selectorContext) {
 
 #### Changing a Selector Prefix
 
-To change how an existing selector is invoked, use the `.selector()` method.
-The following calls change the override selector to use the '@' prefix 
-instead of the '#' prefix.
+To change when an existing selector is invoked, use the `.selector()` method.
+The following example causes the override selector to be invoked when a
+string argument is prefixed with '@' instead of '#':
 
 ```javascript    
 extend.selector('@', extend.selector('#'));
@@ -249,18 +250,18 @@ Filters allow you to reject selected properties, and transform the values of
 selected properties. Filters form a filter pipeline where a property is passed 
 from one filter to the next.
 
-#### Adding a Filter
+#### Adding a Custom Filter
 
-To add a filter, simply add it as another argument to the method call:
+To add your own filter, simply add it as another argument to the method call:
 
 ```javascript    
 extend(this).with(new Dog(), '!bark', myFilter, anotherFilter);
 ```
 
-Each filter is passed a `filterContext` object which contains the property 
-being merged. The filter can modify the property's value and the target key. A
-filter is expected to return true if the property can be merged, and false if
-the property should be rejected.
+When a filter is invoked, it is passed a `filterContext` object which contains 
+the property being merged. The filter can modify the property's value and the 
+target name. A filter is expected to return true if the property can be merged, 
+and false if the property should be rejected.
 
 Here is the filter used by the `.withDelegate()` method to delegate method
 calls to the source object:
@@ -313,7 +314,7 @@ function createExcludeNameFilter(regexp) {
 }
 ```
 
-The following call is equivalent to calling `extend.withDelegate(new Dog());`.
+The following example is equivalent to calling the `.withDelegate()` method:
 
 ```javascript    
 extend(this).with(new Dog(), createExcludeNameFilter(/^_/), delegateFilter);
@@ -325,18 +326,18 @@ Methods allow you to fully operate on the target and source object. However
 their main purpose is to allow you to preselect which filters are applied to the
 properties rather than having the user pass in the filters as arguments.
 
-#### Adding a Method
+#### Adding a Custom Method
 
-To add a new method, use `.method()`:
+To add your own method, use `.method()`:
 
 ```javascript    
 extend.method('withDelegate', delegateMethod);
 ```
 
-Every method is passed a `parser` function and the user arguments.
-The method is responsible for calling the `parser` function with the user 
-arguments and returning the parameters from the parser function. But before 
-doing so, a method can:
+When a method is invoked, it is passed a `parser` function and the user 
+arguments. The method is responsible for calling the `parser` function with 
+the user arguments and returning the parameters from the parser function. 
+But before doing so, a method can:
 
 * modify the user arguments before passing them to the parser function
 * modify the parameters returned by the parser function
@@ -377,12 +378,13 @@ function delegateMethod(target, parseArgs, args) {
 
 **Note:** One of the advantages of adding filters using a method is 
 that you have absolute control over where the filters are placed in relation 
-to the user provided arguments.
+to the user arguments.
 
 #### Changing a Method Name
 
-To change how an existing method is invoked, use the `.method()` call. The
-following calls change the mixin method from `.with()` to `withMixin()`:
+To change when an existing method is invoked, use `.method()`. The
+following example will cause the mixin method to be invoked when the user calls
+`.withMixin()` instead of `.with()`:
 
 ```javascript    
 extend.method('withMixin', extend.method('with'));

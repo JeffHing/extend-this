@@ -1,7 +1,7 @@
 {
     "name": "extend-this",
     "main": "./src/extendThis.js",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "An extensible framework for defining \"recipes\" for extending an object using properties from other objects.",
     "keywords": ["extend", "composition", "delegate", "mixin", "aspect", "framework"],
     "homepage": "https://github.com/JeffHing/extend-this",
