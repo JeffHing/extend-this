@@ -23,7 +23,7 @@ module.exports = function(config) {
 
     // Test using this source file
     options.webpack.resolve.alias['extend-this'] =
-        path.join(__dirname, 'dist/extendThis.min.js');
+        path.join(__dirname, 'dist/extendThis.js');
 
     config.set(options);
 };

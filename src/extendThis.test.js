@@ -7,7 +7,7 @@
  */
 'use strict';
 
-var extend = require('extendThis');
+var extend = require('extend-this');
 
 describe('extendThis.js:', function() {
 

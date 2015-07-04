@@ -3,7 +3,7 @@
  *
  * MIT License
  *
- * Karma configuration for testing un-minimized version.
+ * Karma configuration for testing source file.
  */
 'use strict';
 
@@ -23,10 +23,10 @@ module.exports = function(config) {
     var options = karmaBaseConf();
 
     // Test using this source file
-    options.webpack.resolve.alias.extendThis =
+    options.webpack.resolve.alias['extend-this'] =
         path.join(__dirname, 'src/extendThis.js');
 
-    // Lint un-minified javascript
+    // Lint source file
     options.webpack.module.loaders.push({
         test: /\.js$/,
         loader: 'eslint-loader',
