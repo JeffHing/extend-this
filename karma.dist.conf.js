@@ -3,12 +3,12 @@
  *
  * MIT License
  *
- * Karma configuration for testing minimized version.
+ * Karma configuration for testing un-minimized version.
  */
 'use strict';
 
 //-------------------------------------
-// Module dependencies and variables.
+// Module dependencies and variables
 //-------------------------------------
 
 var path = require('path');

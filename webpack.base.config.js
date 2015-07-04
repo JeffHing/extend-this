@@ -35,7 +35,7 @@ module.exports = function(options) {
 
         module: {
             loaders: [{
-                // lint javascript
+                // Lint javascript.
                 test: /\.js$/,
                 loader: 'eslint-loader',
                 exclude: /node_modules/

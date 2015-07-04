@@ -8,7 +8,7 @@
 'use strict';
 
 //-------------------------------------
-// Module dependencies and variables.
+// Module dependencies and variables
 //-------------------------------------
 
 var path = require('path');
@@ -22,11 +22,11 @@ module.exports = function(config) {
 
     var options = karmaBaseConf();
 
-    // Test using this source file
+    // Test using this source file.
     options.webpack.resolve.alias['extend-this'] =
         path.join(__dirname, 'src/extendThis.js');
 
-    // Lint source file
+    // Lint source file.
     options.webpack.module.loaders.push({
         test: /\.js$/,
         loader: 'eslint-loader',
