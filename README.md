@@ -26,7 +26,7 @@ it to support arbitrary recipes for extending objects.
 
 ## Features
 
-* An extensible vocabulary for selecting object properties.
+* An extensible set of selectors for selecting object properties.
 * An extensible set of filters for filtering object properties.
 * An extensible set of methods for applying preselected filters to object properties. 
 * Detection of namespace collisions when merging object properties.
@@ -199,7 +199,7 @@ selector should update the embedded `sourceKeys` object with the names of the
 properties to merge into the target object.
 
 In this example, `mySelector` merges all the properties from the source
-object and does not report an error if the property already exists in the 
+object and disables reporting an error if the property already exists in the 
 target object:
 
 ```javascript    
@@ -259,9 +259,9 @@ extend(this).with(new Dog(), '!bark', myFilter, anotherFilter);
 ```
 
 When a filter is invoked, it is passed a `filterContext` object which contains 
-the property being merged. The filter can modify the property's value and the 
-target name. A filter is expected to return true if the property can be merged, 
-and false if the property should be rejected.
+the property being merged. A filter is expected to return true if the property 
+can be merged, and false if the property should be rejected. The filter can 
+modify the property's value and the target name. 
 
 Here is the filter used by the `.withDelegate()` method to delegate method
 calls to the source object:
@@ -314,7 +314,7 @@ function createExcludeNameFilter(regexp) {
 }
 ```
 
-The following example is equivalent to calling the `.withDelegate()` method:
+The following example is equivalent to calling `.withDelegate(new Dog())`:
 
 ```javascript    
 extend(this).with(new Dog(), createExcludeNameFilter(/^_/), delegateFilter);
@@ -336,7 +336,7 @@ extend.method('withDelegate', delegateMethod);
 ```
 
 When a method is invoked, it is passed a `parser` function and the user 
-arguments. The method is responsible for calling the `parser` function with 
+arguments. The method is responsible for calling the parser function with 
 the user arguments and returning the parameters from the parser function. 
 But before doing so, a method can:
 
@@ -447,8 +447,8 @@ extend(this).with(source, 'foo');
 this.foo = 'red';
 ```
     
-This will not generate an error. Dependending upon the context, you may have 
-wanted to be alerted that the property 'foo' from the source object, collides 
+This will not generate an error. Dependending upon the context, you may
+want to be alerted that the property 'foo' from the source object, collides 
 with the local property 'foo'.
 
 ExtendThis offers an alternative way of setting the 'foo' property using the 
