@@ -1,43 +1,53 @@
 {
-    "name": "extend-this",
-    "main": "./src/extendThis.js",
-    "version": "0.1.3",
-    "description": "An extensible framework for defining \"recipes\" for extending an object using properties from other objects.",
-    "keywords": ["extend", "composition", "delegate", "delegation", "recipe", "property", "mixin", "aspect", "framework"],
-    "homepage": "https://github.com/JeffHing/extend-this",
-    "license": "MIT",
-    "author": {
-        "name": "Jeffrey Hing",
-        "email": "hingcruz@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/JeffHing/extend-this.git"
-    },
-    "dependencies": {
-        "fast-apply": "0.0.3"
-    },
-    "devDependencies": {
-        "eslint": "^0.23.0",
-        "eslint-loader": "^0.14.0",
-        "extend": "^2.0.1",
-        "karma": "^0.12.31",
-        "karma-cli": "0.0.4",
-        "karma-coverage": "^0.4.2",
-        "karma-jasmine": "^0.3.5",
-        "karma-phantomjs-launcher": "^0.1.4",
-        "karma-webpack": "^1.5.1",
-        "path": "^0.11.14",
-        "phantomjs-polyfill": "0.0.1",
-        "rimraf": "^2.4.0",
-        "webpack": "^1.9.4"
-    },
-    "scripts": {
-        "dev": "karma start",
-        "test": "karma start --single-run",
-        "predist": "rimraf dist && mkdir dist",
-        "dist": "npm run test && npm run distNotMin && npm run distMin",
-        "distNotMin": "webpack --progress --config webpack.dist.config.js && karma start karma.dist.conf.js --single-run",
-        "distMin": "webpack -p --progress --config webpack.distMin.config.js && karma start karma.distMin.conf.js --single-run"
-    }
+  "name": "extend-this",
+  "main": "./src/extendThis.js",
+  "version": "0.1.4",
+  "description": "An extensible framework for defining \"recipes\" for extending an object using properties from other objects.",
+  "keywords": [
+    "extend",
+    "composition",
+    "delegate",
+    "delegation",
+    "recipe",
+    "property",
+    "mixin",
+    "aspect",
+    "framework"
+  ],
+  "homepage": "https://github.com/JeffHing/extend-this",
+  "license": "MIT",
+  "author": {
+    "name": "Jeffrey Hing",
+    "email": "hingcruz@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JeffHing/extend-this.git"
+  },
+  "dependencies": {
+    "fast-apply": "0.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^0.23.0",
+    "eslint-loader": "^0.14.0",
+    "extend": "^2.0.1",
+    "karma": "^0.12.31",
+    "karma-cli": "0.0.4",
+    "karma-coverage": "^0.4.2",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-webpack": "^1.5.1",
+    "path": "^0.11.14",
+    "phantomjs-polyfill": "0.0.1",
+    "rimraf": "^2.4.0",
+    "webpack": "^1.9.4"
+  },
+  "scripts": {
+    "dev": "karma start",
+    "test": "karma start --single-run",
+    "predist": "rimraf dist && mkdir dist",
+    "dist": "npm run test && npm run distNotMin && npm run distMin",
+    "distNotMin": "webpack --progress --config webpack.dist.config.js && karma start karma.dist.conf.js --single-run",
+    "distMin": "webpack -p --progress --config webpack.distMin.config.js && karma start karma.distMin.conf.js --single-run"
+  }
 }
