@@ -6,12 +6,12 @@ To run unit tests while editing source files:
     
 ## Test
 
-To run unit tests against the current source file:
+To run unit tests against the current source files:
 
     npm run test
     
 ## Distribute
 
-To build a distribution and run unit tests:
+To build a distribution and run unit tests against the distribution files:
 
     npm run dist

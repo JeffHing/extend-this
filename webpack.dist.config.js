@@ -8,11 +8,13 @@
 'use strict';
 
 //-------------------------------------
+// Module dependencies and variables
+//-------------------------------------
+
+var common = require('./webpack.common.js');
+
+//-------------------------------------
 // Module exports
 //-------------------------------------
 
-module.exports = require('./webpack.base.config.js')({
-    output: {
-        filename: 'extendThis.js'
-    }
-});
+module.exports = common.distConfig('extendThis.js');

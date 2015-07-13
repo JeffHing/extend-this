@@ -38,6 +38,6 @@
         "predist": "rimraf dist && mkdir dist",
         "dist": "npm run test && npm run distNotMin && npm run distMin",
         "distNotMin": "webpack --progress --config webpack.dist.config.js && karma start karma.dist.conf.js --single-run",
-        "distMin": "webpack -p --progress --config webpack.min.config.js && karma start karma.min.conf.js --single-run"
+        "distMin": "webpack -p --progress --config webpack.distMin.config.js && karma start karma.distMin.conf.js --single-run"
     }
 }
