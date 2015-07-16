@@ -13,10 +13,10 @@
 // Module dependencies and variables
 //-------------------------------------
 
-var common = require('./webpack.common.js');
+var webpackBase = require('./webpack.base');
 
 //-------------------------------------
 // Module exports
 //-------------------------------------
 
-module.exports = common.distConfig('extendThis.min.js');
+module.exports = webpackBase.distConfig(webpackBase.library.minFilename);

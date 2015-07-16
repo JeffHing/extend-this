@@ -13,6 +13,7 @@
 
 var path = require('path');
 var karmaWebpackPlugin = require('karma-webpack');
+var webpackBase = require('./webpack.base');
 
 //-------------------------------------
 // Module exports
@@ -62,10 +63,7 @@ module.exports = function(sourceFile, loaders) {
                 loaders: allLoaders
             },
             resolve: {
-                alias: {
-                    'extend-this': path.join(
-                        __dirname, sourceFile)
-                }
+                alias: {}
             }
         },
 
@@ -74,6 +72,9 @@ module.exports = function(sourceFile, loaders) {
         }
 
     };
+
+    conf.webpack.resolve.alias[webpackBase.library.projectName] =
+        path.join(__dirname, sourceFile);
 
     conf.preprocessors[testFilesPattern] = ['webpack'];
 
