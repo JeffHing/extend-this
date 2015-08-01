@@ -80,12 +80,15 @@ function createDistConfig(libraryName) {
 //-------------------------------------
 
 if (flags['#wdist']) {
+    // Create distribution file.
     module.exports = createDistConfig(library.filename);
 
 } else if (flags['#wdistMin']) {
+    // Create minimized distribution file.
     module.exports = createDistConfig(library.filenameMin);
 
 } else {
+    // Common settings.
     module.exports = {
         library: library,
         loaders: loaders
