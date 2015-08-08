@@ -263,30 +263,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    while (methodArgs.length) {
 	        var arg = methodArgs.shift();
 
-	        // Is a string selector
 	        if (isString(arg)) {
+	            // Is a string selector
 	            if (!selectorsManager.executeSelector(source, arg, null,
 	                    sourceKeys, overrideKeys)) {
 	                sourceKeys[arg] = arg;
 	            }
-	        }
-	        // Is a regular expression selector.
-	        else if (isRegex(arg)) {
+
+	        } else if (isRegex(arg)) {
+	            // Is a regular expression selector.
 	            extendSourceKeys(sourceKeys, source, arg);
-	        }
-	        // decompose array into separate arguments
-	        else if (isArray(arg)) {
+
+	        } else if (isArray(arg)) {
+	            // decompose array into separate arguments
 	            for (var j = 0; j < arg.length; j++) {
 	                methodArgs.push(arg[j]);
 	            }
-	        }
-	        // Is a filter.
-	        else if (isFunction(arg)) {
+
+	        } else if (isFunction(arg)) {
+	            // Is a filter.
 	            filters.push(arg);
 
-	        }
-	        // Is a selector with rename.
-	        else if (isObject(arg)) {
+	        } else if (isObject(arg)) {
+	            // Is a selector with rename.
 	            for (var sourceKey in arg) {
 	                var targetKey = arg[sourceKey];
 	                if (!selectorsManager.executeSelector(source, sourceKey,
@@ -585,9 +584,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Then remove the negated property.
 	    if (selectorContext.sourceKeys[selectorContext.sourceKey] !== undefined) {
 	        delete selectorContext.sourceKeys[selectorContext.sourceKey];
-	    }
-	    // Throw error if negated property not found.
-	    else {
+
+	        // Throw error if negated property not found.
+	    } else {
 	        errorManager.propertyNotFound(selectorContext.sourceKey, selectorContext.source);
 	    }
 	}
