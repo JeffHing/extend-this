@@ -1,3 +1,7 @@
+### 0.1.5 (2015-08-13)
+* Normalize build across projects.
+* README clarifications.
+
 ### 0.1.4 (2015-07-12)
 * Normalize build across projects.
 * README clarifications.
