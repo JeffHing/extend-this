@@ -31,7 +31,7 @@ it to support arbitrary recipes for extending objects.
 * An extensible set of methods for applying preselected filters to object properties. 
 * Detection of namespace collisions when merging object properties.
 * Ability to rename and redefine the default APIs according to your preferences.
-* Compatibility with CommonJS, AMD, and non-module build environments.
+* Compatible with CommonJS, AMD, and non-module build environments.
 * Less than 5K minified.
 
 ## Installation
@@ -113,8 +113,9 @@ in an array followed by the filter or selector arguments.
     
 ### Property Selectors
 
-By default all properties of the source object are merged with the properties
-of the target object. However this can be overridden using property selectors.
+By default all properties of the source object are merged with the properties 
+of the target object. However this can be overridden by using property 
+selectors.
 
 #### String Selector
 
@@ -167,10 +168,9 @@ error if the property already exists in the target object:
 extend(this).withDelegate(new Dog(), '#bark');
 ```
     
-    
 #### Selector Combinations
 
-Different selector types can be used together.
+Different property selectors can be used together.
 
 This example merges all properties and renames the `bark()` method to 
 the `sound()` method:
@@ -187,7 +187,7 @@ extend(this).withDelegate(new Dog(), {'#bark': sound});
 ```
 #### Adding a Custom Selector
 
-To add your own selector, use the `.selector()` method. In the following
+To add your own property selector, use the `.selector()` method. In this
 example, `mySelector` will be invoked whenever a string argument is 
 prefixed with '*':
 
@@ -198,7 +198,7 @@ When a selector is invoked, it is passed a `selectorContext` object. The
 selector should update the embedded `sourceKeys` object with the names of the
 properties to merge into the target object.
 
-In this example, `mySelector` merges all the properties from the source
+The following `mySelector` function merges all the properties from the source
 object and disables reporting an error if the property already exists in the 
 target object:
 
@@ -235,8 +235,8 @@ function mySelector(selectorContext) {
 
 #### Changing a Selector Prefix
 
-To change when an existing selector is invoked, use the `.selector()` method.
-The following example causes the override selector to be invoked when a
+To change when an existing property selector is invoked, use the `.selector()`
+method. The following example causes the override selector to be invoked when a
 string argument is prefixed with '@' instead of '#':
 
 ```javascript    
@@ -323,8 +323,9 @@ extend(this).with(new Dog(), createExcludeNameFilter(/^_/), delegateFilter);
 ### Methods    
 
 Methods allow you to fully operate on the target and source object. However
-their main purpose is to allow you to preselect which filters are applied to the
-properties rather than having the user pass in the filters as arguments.
+their primary purpose is to allow you to preselect which filters are 
+applied to the properties rather than have the user pass in the 
+filters as arguments.
 
 #### Adding a Custom Method
 
@@ -335,7 +336,7 @@ To add your own method, use `.method()`. In the following example,
 extend.method('withDelegate', delegateMethod);
 ```
 
-When a method is invoked, it is passed a `parser` function and the user 
+When a method is invoked, it is passed a `parser` function and any user 
 arguments. The method is responsible for calling the parser function with 
 the user arguments and returning the parameters from the parser function. 
 But before doing so, a method can:
@@ -422,9 +423,9 @@ extend.config.throwPropertyNotFoundError = false;
 
 ### Multiple extend Functions
 
-There may be a different extend function which you may want to use in addition
-to extendThis. To allow the other extend function to be invoked from extendThis,
-use the `.wrap()` method:
+There may be another type of extend function which you may want to use in 
+addition to extendThis. To allow the other extend function to be invoked 
+from extendThis, use the `.wrap()` method:
 
 ```javascript    
 extend.wrap(otherExtendFunc);
